@@ -1,0 +1,4 @@
+[
+    { "title": "My First Blog", "date": "2025-09-07", "path": "blog1.html" },
+    { "title": "Understanding JavaScript Closures", "date": "2025-09-05", "path": "blog2.html" }
+]

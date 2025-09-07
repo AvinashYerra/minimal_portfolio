@@ -1,0 +1,27 @@
+{
+  "about": {
+    "name": "Avinash Yerra",
+    "role": "Data Engineer in ☀️, Web Developer in 🌙 ",
+    "email": "avinashyerra123@gmail.com"
+  },
+  "skills": ["Python","SQL","C","C++","Bash","JavaScript","PySpark (Spark)","Airflow","VS Code","Excel","MySQL","PostgreSQL","Snowflake","Git","Hadoop"],
+
+  "education": [
+    { "degree": "B.Tech in CSE", "institute": "NIT Raipur", "year": "2024" },
+    { "degree": "MPC", "institute": "Tirumala College", "year": "2020" }
+  ],
+  "experience": [
+    { "role": "Business Technology Solution Associate", "company": "ZS Associates", "duration": "Jul 2024 - Present" },
+    { "role": "Business Technology Solution Associate Intern", "company": "ZS Associates", "duration": "Jan 2024 - Jun 2024" },
+    { "role": "Project Intern", "company": "CompleteCure Solutions", "duration": "Jun 2023 - Aug 2023 " }
+  ],
+ 
+  "socials": {
+    "GitHub": "https://github.com/AvinashYerra",
+    "LinkedIn": "https://www.linkedin.com/in/avinash-yerra/",
+    "Leetcode": "https://leetcode.com/u/avinashyerra/",
+    "GeeksForGeeks": "https://www.geeksforgeeks.org/user/avinashyerra123/",
+    "CodeChef": "",
+    "Codeforces": "https://codeforces.com/profile/avinashyerra"
+  }
+}
