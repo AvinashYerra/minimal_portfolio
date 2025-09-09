@@ -2,11 +2,11 @@ fetch('blogs/blogs.json')
     .then(res => res.json())
     .then(blogs => {
         const container = document.getElementById('blog-list');
-        blogs.slice(0,1).forEach(blog => {
+        blogs.forEach(blog => {
             const blogItem = document.createElement('div');
             blogItem.innerHTML = `
                 <h3><a href="blogs/${blog.path}">${blog.title}</a></h3>
-                <small>${blog.date}</small>
+                <small>Date posted: ${blog.date}</small>
             `;
             container.appendChild(blogItem);
         });

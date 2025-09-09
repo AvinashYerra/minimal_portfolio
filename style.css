@@ -33,8 +33,8 @@ nav a {
 }
 
 .project, #blog-list div {
-    margin-bottom: 20px;
-    padding: 10px;
+    margin-bottom: 10px;
+    padding: 7px;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
