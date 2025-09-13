@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phn Pe Interview Experience</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+    <h1>Phn Pe Interview Experience</h1>
+    <p>Date: 2025-09-14</p>
+
+    <p>Basic intro questions and project explanation</p>
+    <p>Next we moved to SQL questions and I was asked to write code in notepad</p>
+
+    <h3>Table Details</h3>
+    <p><strong>Table Name:</strong> <code>cricket_scores</code></p>
+    <p><strong>Columns:</strong></p>
+    <ul>
+        <li><code>team_name</code> (STRING)</li>
+        <li><code>match_date</code> (DATE)</li>
+        <li><code>match_result</code> (CHAR) - 'W' for Win, 'L' for Loss</li>
+    </ul>
+    <p><strong>Sample Records:</strong></p>
+    <pre><code>
+'India', 2025-01-17, 'W'
+'Pakistan', 2025-01-17, 'L'
+    </code></pre>
+    <p><em>Assumption:</em> One match per day, so two records per match (one for each team).</p>
+
+    <h2>1. Total Number of Matches Played in 2025</h2>
+    <pre><code>
+SELECT COUNT(*) / 2 AS num_of_matches
+FROM cricket_scores
+WHERE YEAR(match_date) = 2025;
+    </code></pre>
+
+    <h2>2. Teams with the 3rd Highest Number of Losses in 2025</h2>
+    <pre><code>
+WITH loss_cnt_cte AS (
+    SELECT 
+        team_name,
+        COUNT(*) AS loss_cnt
+    FROM cricket_scores
+    WHERE YEAR(match_date) = 2025
+      AND match_result = 'L'
+    GROUP BY team_name
+),
+rnk_cte AS (
+    SELECT 
+        team_name,
+        loss_cnt,
+        DENSE_RANK() OVER (ORDER BY loss_cnt DESC) AS rnk
+    FROM loss_cnt_cte
+)
+SELECT DISTINCT team_name
+FROM rnk_cte
+WHERE rnk = 3;
+    </code></pre>
+
+    <h2>3. Longest Winning Streak of India in 2025</h2>
+    <p>Example Sequence: WWLLLLWWWWWLWWW → Longest streak is 5</p>
+    <pre><code>
+WITH req_cte AS (
+    SELECT match_result
+    FROM cricket_scores
+    WHERE team_name = 'India'
+      AND YEAR(match_date) = 2025
+    ORDER BY match_date
+),
+loss_cnt_cte AS (
+    SELECT 
+        match_result,
+        SUM(CASE WHEN match_result = 'L' THEN 1 ELSE 0 END) 
+            OVER (ORDER BY ROW_NUMBER() OVER ()) AS cumulative_losses
+    FROM req_cte
+)
+SELECT MAX(win_streak) AS longest_win_streak
+FROM (
+    SELECT 
+        cumulative_losses,
+        COUNT(*) AS win_streak
+    FROM loss_cnt_cte
+    WHERE match_result = 'W'
+    GROUP BY cumulative_losses
+) t;
+    </code></pre>
+
+    <h2>4. Cron Job Syntax - Run Every Monday at 4 PM</h2>
+    <pre><code>
+0 16 * * 1
+    </code></pre>
+
+    <h2>Feedback & Verdict</h2>
+    <ul>
+        <li>Final Verdict: Rejected after 1st round cos cant answer the streak question</li>
+    </ul>
+
+    <p><strong>I have mentioned SQL resources required for SDE in my previous blog - <a href="https://avinashyerra.netlify.app/blogs/blog2.html">SQL resources</a> </strong></p>
+    <p><strong>For Data roles - I prefer from DataLemur, Stratascratch</strong></p>
+    <p><strong>All the Best!</strong></p>
+
+    <a href="../index.html">← Back to Home</a>
+</body>
+
+</html>
