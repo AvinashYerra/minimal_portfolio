@@ -2,16 +2,37 @@ fetch('blogs/blogs.json')
     .then(res => res.json())
     .then(blogs => {
         const container = document.getElementById('blog-list');
+
+        // Group blogs by category
+        const categories = {};
         blogs.forEach(blog => {
-            const blogItem = document.createElement('div');
-            blogItem.innerHTML = `
-                <h3><a href="blogs/${blog.path}">${blog.title}</a></h3>
-                <small>Date posted: ${blog.date}</small>
-            `;
-            container.appendChild(blogItem);
+            if (!categories[blog.category]) {
+                categories[blog.category] = [];
+            }
+            categories[blog.category].push(blog);
         });
+
+        // Render categories and blogs
+        for (const category in categories) {
+            const categorySection = document.createElement('div');
+            categorySection.classList.add('category-section');
+
+            categorySection.innerHTML = `<h2>${category}</h2>`;
+
+            categories[category].forEach(blog => {
+                const blogItem = document.createElement('div');
+                blogItem.innerHTML = `
+                    <h3><a href="./blogs/${blog.path}">${blog.title}</a></h3>
+                    <small>Date posted: ${blog.date}</small>
+                `;
+                categorySection.appendChild(blogItem);
+            });
+
+            container.appendChild(categorySection);
+        }
     })
     .catch(err => console.error('Failed to load blogs:', err));
+
 
 
 // Load personal info from data.json
