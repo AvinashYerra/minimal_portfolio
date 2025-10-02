@@ -12,12 +12,20 @@ fetch('blogs/blogs.json')
             categories[blog.category].push(blog);
         });
 
-        // Render categories and blogs
+        // Render categories with expandable sections
         for (const category in categories) {
             const categorySection = document.createElement('div');
             categorySection.classList.add('category-section');
 
-            categorySection.innerHTML = `<h2>${category}</h2>`;
+            // Header with arrow
+            const header = document.createElement('div');
+            header.classList.add('category-header');
+            header.innerHTML = `<h2>${category} <span class="arrow">▶</span></h2>`;
+
+            // Hidden blog list container
+            const blogList = document.createElement('div');
+            blogList.classList.add('blog-items');
+            blogList.style.display = "none";
 
             categories[category].forEach(blog => {
                 const blogItem = document.createElement('div');
@@ -25,13 +33,23 @@ fetch('blogs/blogs.json')
                     <h3><a href="./blogs/${blog.path}">${blog.title}</a></h3>
                     <small>Date posted: ${blog.date}</small>
                 `;
-                categorySection.appendChild(blogItem);
+                blogList.appendChild(blogItem);
             });
 
+            // Toggle expand/collapse
+            header.addEventListener('click', () => {
+                const isOpen = blogList.style.display === "block";
+                blogList.style.display = isOpen ? "none" : "block";
+                header.querySelector('.arrow').textContent = isOpen ? '▶' : '▼';
+            });
+
+            categorySection.appendChild(header);
+            categorySection.appendChild(blogList);
             container.appendChild(categorySection);
         }
     })
     .catch(err => console.error('Failed to load blogs:', err));
+
 
 
 

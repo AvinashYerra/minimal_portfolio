@@ -35,11 +35,23 @@ nav a {
 .project, #blog-list div {
     margin-bottom: 10px;
     padding: 7px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
 }
 
 
+.category-header {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.category-header h2 {
+    margin: 0;
+}
+
+.arrow {
+    font-size: 16px;
+}
 
 a {
     color: black;
