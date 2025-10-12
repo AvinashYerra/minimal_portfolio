@@ -70,16 +70,31 @@ fetch('data.json')
         });
 
         data.education.forEach(edu => {
-            const li = document.createElement('li');
-            li.textContent = `${edu.degree}, ${edu.institute} (${edu.year})`;
-            document.getElementById('education-list').appendChild(li);
+            const div = document.createElement('div');
+            div.classList.add('education-item');
+            div.innerHTML = `
+                <div class="edu-main">
+                    <span class="edu-degree">${edu.degree}</span>
+                    <span class="edu-year">${edu.year}</span>
+                </div>
+                <div class="edu-institute">${edu.institute}</div>
+            `;
+            document.getElementById('education-list').appendChild(div);
         });
 
         data.experience.forEach(exp => {
-            const li = document.createElement('li');
-            li.textContent = `${exp.role} at ${exp.company} (${exp.duration})`;
-            document.getElementById('experience-list').appendChild(li);
+            const div = document.createElement('div');
+            div.classList.add('experience-item');
+            div.innerHTML = `
+                <div class="exp-main">
+                    <span class="exp-role">${exp.role}</span>
+                    <span class="exp-duration">${exp.duration}</span>
+                </div>
+                <div class="exp-company">${exp.company}</div>
+            `;
+            document.getElementById('experience-list').appendChild(div);
         });
+
 
         for (const [platform, link] of Object.entries(data.socials)) {
             const li = document.createElement('li');

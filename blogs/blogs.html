@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blogs | Avinash Yerra</title>
+    <link rel="stylesheet" href="../style.css" /> <!-- Adjust if path differs -->
+</head>
+<body>
+
+    <nav>
+        <a href="../index.html">← Back to Home</a>
+    </nav>
+
+    <h1>All Blogs</h1>
+    <div id="blog-list"></div>
+
+    <script>
+        fetch('blogs.json')
+            .then(res => res.json())
+            .then(blogs => {
+                const container = document.getElementById('blog-list');
+
+                // Group blogs by category
+                const categories = {};
+                blogs.forEach(blog => {
+                    if (!categories[blog.category]) {
+                        categories[blog.category] = [];
+                    }
+                    categories[blog.category].push(blog);
+                });
+
+                // Render categories (expanded, minimal)
+                for (const category in categories) {
+                    const categorySection = document.createElement('section');
+                    categorySection.innerHTML = `<h2>${category}</h2>`;
+
+                    categories[category].forEach(blog => {
+                        const blogItem = document.createElement('div');
+                        blogItem.innerHTML = `
+                            <p>
+                                <a href="./${blog.path}">${blog.title}</a><br>
+                                <small>Data posted: ${blog.date}</small>
+                            </p>
+                        `;
+                        categorySection.appendChild(blogItem);
+                    });
+
+                    container.appendChild(categorySection);
+                }
+            })
+            .catch(err => console.error('Failed to load blogs:', err));
+    </script>
+
+</body>
+</html>

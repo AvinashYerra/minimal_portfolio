@@ -78,3 +78,56 @@ a:hover {
     white-space: nowrap;
 }
 
+.blog-button {
+    display: inline-block;
+    padding: 10px 18px;
+    /* background: #007bff; */
+    color: black;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#experience-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.experience-item {
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.exp-main {
+    display: flex;
+    justify-content: space-between; /* Role left, duration right */
+    font-weight: bold;
+}
+
+.exp-company {
+    color: #555;
+    font-size: 0.95rem;
+}
+
+#education-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.education-item {
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.edu-main {
+    display: flex;
+    justify-content: space-between; /* Degree left, Year right */
+    font-weight: bold;
+}
+
+.edu-institute {
+    color: #555;
+    font-size: 0.95rem;
+}
