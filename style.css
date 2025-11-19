@@ -1,9 +1,29 @@
+* {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+:root {
+    --bg: whitesmoke;
+    --text: #333;
+    --nav-text: black;
+    --nav-link: black;
+    --border: #ddd;
+}
+
+.dark {
+    --bg: #0d1117;
+    --text: #e6edf3;
+    --nav-text: #e6edf3;
+    --nav-link: #e6edf3;
+    --border: #30363d;
+}
+
 body {
     font-family: 'Fira Code', monospace;
     max-width: 1000px;
     margin: auto;
     padding: 20px;
-    background-color: whitesmoke;
+    background-color: var(--bg);
+    color: var(--text);
 }
 
 header, section {
@@ -11,26 +31,37 @@ header, section {
 }
 
 h1, h2 {
-    color: #333;
+    color: var(--text);
 }
 
 nav {
     display: flex;
     justify-content: center;
     gap: 20px;
-    color: black;
+    color: var(--nav-text);
     background-color: transparent;
     padding: 15px;
 }
 
 nav a {
-    color: black;
+    color: var(--nav-link);
     text-decoration: none;
     font-weight: 500;
     padding: 8px 16px;
     border-radius: 6px;
     transition: background-color 0.3s ease;
 }
+
+a {
+    color: var(--text);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
 
 .project, #blog-list div {
     margin-bottom: 10px;
@@ -53,19 +84,11 @@ nav a {
     font-size: 16px;
 }
 
-a {
-    color: black;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
 
 
 #skills-list , #socials-list{
     display: flex;
-    color: black;
+    color: var(--text);
     flex-wrap: wrap;
     gap: 10px;
     padding: 0;
@@ -81,53 +104,39 @@ a:hover {
 .blog-button {
     display: inline-block;
     padding: 10px 18px;
-    /* background: #007bff; */
-    color: black;
+    color: var(--text);
     border-radius: 6px;
     text-decoration: none;
     font-weight: bold;
 }
 
-#experience-list {
+#experience-list,#education-list {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.experience-item {
+.experience-item,.education-item {
     padding: 8px 0;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--border);
 }
 
-.exp-main {
+.exp-main, .edu-main {
     display: flex;
-    justify-content: space-between; /* Role left, duration right */
+    justify-content: space-between; 
     font-weight: bold;
 }
 
-.exp-company {
-    color: #555;
+.exp-company, .edu-institute{
+    color: var(--text);
     font-size: 0.95rem;
 }
 
-#education-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.education-item {
-    padding: 8px 0;
-    border-bottom: 1px solid #ddd;
-}
-
-.edu-main {
-    display: flex;
-    justify-content: space-between; /* Degree left, Year right */
-    font-weight: bold;
-}
-
-.edu-institute {
-    color: #555;
-    font-size: 0.95rem;
+.theme-btn {
+    margin-left: auto;
+    cursor: pointer;
+    font-size: 22px;
+    background: none;
+    border: none;
+    color: var(--nav-text);
 }
