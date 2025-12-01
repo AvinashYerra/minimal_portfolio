@@ -14,7 +14,7 @@
 
     <h1>All Blogs</h1>
     <div id="blog-list"></div>
-
+    <!-- <script src="script.js"></script> -->
     <script>
         fetch('blogs.json')
             .then(res => res.json())
@@ -50,7 +50,12 @@
                 }
             })
             .catch(err => console.error('Failed to load blogs:', err));
-    </script>
+
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark");
+    }
+
+    </script> 
 
 </body>
 </html>

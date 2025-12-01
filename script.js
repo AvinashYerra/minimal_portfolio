@@ -53,6 +53,7 @@ fetch('blogs/blogs.json')
 
 
 
+
 // Load personal info from data.json
 fetch('data.json')
     .then(res => res.json())
