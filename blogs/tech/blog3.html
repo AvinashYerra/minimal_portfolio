@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snowflake 101</title>
+    <link rel="stylesheet" href="../../style.css">
+</head>
+
+<body>
+    <h1>Snowflake 101</h1>
+    <p>Date: 2025-12-02</p>
+
+    <h2>Intro to Snowflake</h2>
+    <p>Snowflake is a cloud based Data Warehouse that is able to store large amounts of data useful for analytics, reporting and sometimes Machine Learning</p>
+    <p>Pros</p>
+    <ul>
+        <li>Easy to manage and scale</li>
+        <li>Pay as you go model</li>
+        <li>Supports all 3 major cloud providers</li>
+    </ul>
+
+    <h2>Editions</h2>
+    <p>Snowflake comes in different editions, with varying features and pricing. Choose the one based on your use case</p>
+    <ul>
+        <li>Standard</li>
+        <li>Premier</li>
+        <li>Enterprise</li>
+        <li>Business Critical</li>
+        <li>Virtual Private Snowflake(VPS)</li>
+    </ul>
+    <h2>Architecture</h2>
+    <ul>
+        <p>placeholder</p>
+    </ul>
+
+    <h2>UI - description</h2>
+    <ul>
+        <p>placeholder for image</p>
+    </ul>
+
+    <h2>Roles</h2>
+    <p>Snowflake allows you to create different roles where you can manage access to different Databases, Schemas, Tables, Views</p>
+    <p>There are 4 common roles available in Snowflake</p>
+    <ul>
+        <li>ACCOUNTADMIN - Full control (use carefully!)</li>
+        <li>SYSADMIN - Create databases and warehouses</li>
+        <li>SECURITYADMIN - Manage users and roles</li>
+        <li>PUBLIC - Default role for all users</li>
+    </ul>
+    <p>The original role who created the particular object can grant access to other roles to access/edit the object</p>
+
+
+    <h2>Databases & Schemas</h2>
+    <p>To access any object in Snowflake you need to two details. One is Database name and the other is Schema name</p>
+    <p>There can be multiple schemas present in one Database</p>
+    <p>For example, consider a table name 'employee_details' present in database - 'employee_db' and schema - 'employee-schema'. you can select the table using the query -</p>
+    <pre>
+        <code>
+            SELECT * FROM employee_db.employee_schema.employee_details;
+        </code>
+    </pre>
+
+
+    <p>This is a short summarization of the video - <a href="https://www.youtube.com/watch?v=mP3QbYURT9k">Snowflake for Beginners by Data Engineering Academy</a></p>
+
+    <a href="../../index.html">← Back to Home</a>
+    <a href="../blogs.html">← Back to Blogs</a>
+</body>
+
+</html>
