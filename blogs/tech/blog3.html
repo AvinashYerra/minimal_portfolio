@@ -32,10 +32,13 @@
         <li>Virtual Private Snowflake(VPS)</li>
     </ul>
     <h2>Architecture</h2>
+    <p>Snowflake consists of 3 layers:</p>
     <ul>
-        <p>placeholder</p>
+        <li>Cloud Services Layer - Manages security, metadata, and infrastructure management</li>
+        <li>Compute Layer - Handles query processing and execution, these are called warehouses which is a cluster of servers. Large the warehouse size, more the compute power, faster the query execution</li> 
+        <li>Storage Layer - Manages data storage and retrieval, uses micro-partitions that are immutable for storing data in columnar format</li>   
     </ul>
-
+    <p>Snowflake charges as per the compute power used and the amount of data stored</p>
     <h2>UI - description</h2>
     <ul>
         <p>placeholder for image</p>
@@ -326,7 +329,92 @@
         </code>
     </pre>
 
-    
+    <h2>Tasks</h2>
+    <p>Tasks are scheduled jobs in Snowflake that can execute a SQL statement or a stored procedure that consists of multiple SQL statements</p>
+    <p>There are 4 parameters that are required in creating a task</p>
+    <ul>
+        <li>Schedule</li>
+        <li>Warehouse</li>
+        <li>SQL Statement(code)</li>
+        <li>Condition</li>
+    </ul>
+    <p>Tasks are divided into multiple categories:</p>
+    <ul>Based on warehouse</ul>
+    <li>User Managed Tasks - User mention the virtual warehouse that is created by them</li>
+    <li>Serverless Tasks - User mention the name of the warehouse that is required for the computation not the user managed one</li>
+    <ul>Based on scheduling</ul>
+    <li>Non - Cron - Provide the schedule in minutes, hours etc . Min is 1 minute</li>
+    <li>Cron - Provide the schedule in cron format</li>
+    <p>syntax for creating tasks:</p>  
+    <pre>
+        <code>
+            -- Creating a User Managed Non-Cron Task
+            CREATE OR REPLACE TASK my_user_managed_task
+            WAREHOUSE = my_warehouse -- user created warehouse name
+            SCHEDULE = '5 MINUTE'
+            AS
+            INSERT INTO employee_audit_log (id, name, department, action)
+            SELECT id, name, department, 'INSERT'
+            FROM employee_details
+            WHERE METADATA$ACTION = 'INSERT';
+
+            -- Creating a Serverless Cron Task
+            CREATE OR REPLACE TASK my_serverless_cron_task
+            WAREHOUSE = 'XS_SNOWFLAKE_COMPUTE_WH' --give the defaut XS warehouse name
+            SCHEDULE = '0 0 * * *'  -- Every day at midnight
+            AS
+            DELETE FROM employee_details
+            WHERE last_updated < DATEADD(month, -6, CURRENT_DATE());
+        </code>
+    </pre>
+    <p>You can check the status of tasks using the following command:</p>   
+    <pre>
+        <code>
+            SELECT * FROM (information_schema.TASK_HISTORY(TASK_NAME => 'my_task'));
+        </code>
+    </pre>
+
+    <h2>Time Travel & Fail Safe</h2>
+    <p>Time Travel allows you to access historical data (up to 90 days) that has been modified or deleted</p>
+    <p>We can set the retention period to a particular table while creating it using 'DATA_RETENTION_TIME_IN_DAYS'</p>
+    <p>You can query the data using the AT & BEFORE keywords:</p>
+    <pre>
+        <code>
+            -- Querying data at a specific point in time
+            SELECT * FROM employee_details AT (TIMESTAMP => '2023-10-01 12:00:00');
+
+            -- Querying data before a specific point in time
+            SELECT * FROM employee_details BEFORE (STATEMENT => 'query_id');
+        </code>
+    </pre>
+    <p>
+        you can also restore the data using 
+        <pre>
+            <code>
+                UNDROP TABLE/SCHEMA/DATABASE;
+            </code>
+        </pre>
+    </p>
+    <p>Fail Safe is a 7-day period after the Time Travel retention period during which Snowflake can recover historical data for you</p>
+    <p>This cannot be done by the User, you have to connect to Snowflake personal support</p>
+
+    <h2>Cloning</h2>
+    <p>Cloning allows you to create a copy of a database, schema, or table without duplicating the actual data</p>
+    <p>Clones are created instantaneously and share the same metadata as the original object, that means they refer to the same micro partitions until a change is made on clone</p>
+    <p>syntax for creating clones:</p>
+    <pre>
+        <code>
+            -- Creating a Database Clone
+            CREATE DATABASE employee_db_clone CLONE employee_db;
+
+            -- Creating a Schema Clone
+            CREATE SCHEMA employee_schema_clone CLONE employee_db.employee_schema;
+
+            -- Creating a Table Clone
+            CREATE TABLE employee_details_clone CLONE employee_db.employee_schema.employee_details;
+        </code>
+    </pre>
+
 
 
 
