@@ -31,6 +31,22 @@
         <li>Virtual Private Snowflake(VPS) - Offers complete environment isolation and dedicated infrastructure for organizations with strict regulatory or security requirements.</li>
     </ul>
 
+    <h2>Architecture</h2>
+    <p>Snowflake consists of 3 layers:</p>
+    <ul>
+        <li>Cloud Services Layer - Manages security, metadata, and infrastructure management</li>
+        <li>Compute Layer - Handles query processing and execution, these are called warehouses which is a cluster of servers. Large the warehouse size, more the compute power, faster the query execution</li> 
+        <li>Storage Layer - Manages data storage and retrieval, uses micro-partitions that are immutable for storing data in columnar format</li>   
+    </ul>
+    <p>Snowflake charges as per the compute power used and the amount of data stored</p>
+    <img src="../../assets/images/sf-arch.png" alt="Snowflake Image">
+    <h2>UI - description</h2>
+    <ul>
+        <p>placeholder for image</p>
+    </ul>
+
+
+
     <a href="../../index.html">← Back to Home</a>
     <a href="../blogs.html">← Back to Blogs</a>
 
