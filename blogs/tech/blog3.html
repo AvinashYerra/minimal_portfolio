@@ -56,6 +56,18 @@
     </ul>
     <p>The original role who created the particular object can grant access to other roles to access/edit the object</p>
 
+    <h2>Databases & Schemas</h2>
+    <p>To access any object in Snowflake you need to know two details. One is Database name and the other is Schema name</p>
+    <p>There can be multiple schemas present in one Database</p>
+    <p>For example, consider a table name 'employee_details' present in database - 'employee_db' and schema - 'employee-schema'. you can select the table using the query -</p>
+    <pre>
+        <code>
+            SELECT * FROM employee_db.employee_schema.employee_details;
+        </code>
+    </pre>
+    <p>There will be a table named INFORMATION SCHEMA, which consists of all the tables and schema list of that particular database.</p>
+
+    
     <h2>Tables</h2>
     <p>Snowflake supports 4 types of tables:</p>
     <ul>
