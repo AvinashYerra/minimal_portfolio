@@ -56,6 +56,50 @@
     </ul>
     <p>The original role who created the particular object can grant access to other roles to access/edit the object</p>
 
+    <h2>Tables</h2>
+    <p>Snowflake supports 4 types of tables:</p>
+    <ul>
+        <li>Permanent Tables - Default table type, data is stored until deleted</li>
+        <li>Temporary Tables - Data is stored only for the session duration</li>
+        <li>Transient Tables - Data is stored until deleted, but no fail-safe available</li>
+        <li>External Tables - Data is stored outside Snowflake - Read only(like S3, Azure Blob etc.)</li>
+    </ul>
+    <p>syntax for creating different types of tables:</p>
+    <pre>
+        <code>
+            -- Creating a Permanent Table
+            CREATE TABLE employee_details (
+                id INT,
+                name STRING,
+                department STRING
+            );
+
+            -- Creating a Temporary Table
+            CREATE TEMPORARY TABLE temp_employee_details (
+                id INT,
+                name STRING,
+                department STRING
+            );
+
+            -- Creating a Transient Table
+            CREATE TRANSIENT TABLE transient_employee_details (
+                id INT,
+                name STRING,
+                department STRING
+            );
+
+            -- Creating an External Table
+            CREATE EXTERNAL TABLE external_employee_details (
+                id INT,
+                name STRING,
+                department STRING
+            )
+            LOCATION='s3://your-bucket/employee_data/'
+            FILE_FORMAT = (TYPE = 'CSV' FIELD_DELIMITER = ',' SKIP_HEADER = 1);
+        </code>
+    </pre>
+    <p>Time travel will be available for Permanent (90 days) and Transient (1 day), Temporary (1 day) tables, but not for External tables.</p>
+
 
 
     <a href="../../index.html">← Back to Home</a>
