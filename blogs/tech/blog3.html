@@ -112,6 +112,37 @@
     </pre>
     <p>Time travel will be available for Permanent (90 days) and Transient (1 day), Temporary (1 day) tables, but not for External tables.</p>
 
+    <h2>Views</h2>  
+    <p>Views are virtual tables that are based on the result set of a SQL query</p>
+    <p>Views do not store data themselves, but they are executed and displayed when accessed</p>
+    <p>Snowflake supports 3 types of views</p>
+    <ul>
+        <li>Standard Views - Basic views created using SELECT statements</li>
+        <li>Materialized Views - Precomputed views that store the result set for faster access, acts more like a table</li>
+        <li>Secure Views - Encrypted views that provide an additional layer of security</li>
+    </ul>
+    <p>syntax for creating different types of views:</p>
+    <pre>
+        <code>
+            -- Creating a Standard View
+            CREATE VIEW employee_view AS
+            SELECT id, name, department
+            FROM employee_details
+            WHERE department = 'Sales';
+
+            -- Creating a Materialized View
+            CREATE MATERIALIZED VIEW sales_employee_view AS
+            SELECT id, name, department
+            FROM employee_details
+            WHERE department = 'Sales';
+
+            -- Creating a Secure View
+            CREATE SECURE VIEW secure_employee_view AS
+            SELECT id, name, department
+            FROM employee_details
+            WHERE department = 'HR';
+        </code>
+    </pre>
 
 
     <a href="../../index.html">← Back to Home</a>
