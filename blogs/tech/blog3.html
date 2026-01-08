@@ -144,6 +144,39 @@
         </code>
     </pre>
 
+    <h2>Stages</h2>
+    <p>Stages are used to named storage locations where you can store files in Snowflake</p>
+    <p>They can be used to stage data for loading into tables or to store data that is not part of the database schema</p>
+    <p>Snowflake supports 3 types of stages:</p>
+    <ul>
+        <li>Table Stages - Used to store data that are linked to specific table (Internal & Created automatically)</li>
+        <li>User Stages - Used to store data that are linked to a specific user (Internal & Created automatically)</li>
+        <li>Named Stages - Named storage locations for storing files (External & Created by user)</li>
+        <p>Named Stages are again categorized into 2 types</p>
+        <ul>
+            <li>External Stages - Stages that point to external cloud storage locations like AWS S3, Azure Blob Storage, Google Cloud Storage</li>
+            <li>Internal Stages - Stages that are managed by Snowflake and stored within the Snowflake environment</li>
+        </ul>
+    </ul>
+        <p>syntax for creating stages:</p>
+        <pre>
+            <code>
+                --Accessing Table Stage
+                list @%employee_details; -- table name is employee_details
+
+                --Accessing User Stage
+                list @~;
+
+                -- Creating an Internal Named Stage
+                CREATE STAGE my_internal_stage;
+
+                -- Creating an External Named Stage (AWS S3 example)
+                CREATE STAGE my_external_stage
+                URL='s3://my-bucket/data/'
+                CREDENTIALS=(AWS_KEY_ID='your_aws_key_id' AWS_SECRET_KEY='your_aws_secret_key');
+            </code>
+        </pre>
+
 
     <a href="../../index.html">← Back to Home</a>
     <a href="../blogs.html">← Back to Blogs</a>
