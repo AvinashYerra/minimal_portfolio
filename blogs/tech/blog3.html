@@ -177,6 +177,26 @@
             </code>
         </pre>
 
+    <h2>File Formats</h2>
+    <p>File formats define the structure of the data in files that are loaded into Snowflake</p>    
+    <p>Snowflake supports various file formats including CSV, JSON, Avro, Parquet, ORC, XML etc</p>
+    <p>You can create your own file format and use it loading files from Stages</p>
+    <p>syntax for creating file formats:</p>
+    <pre>
+        <code>
+            -- Creating a CSV File Format
+            CREATE FILE FORMAT my_csv_format
+            TYPE = 'CSV'
+            FIELD_DELIMITER = ','
+            SKIP_HEADER = 1
+            FIELD_OPTIONALLY_ENCLOSED_BY = '"';
+
+            -- Creating a JSON File Format
+            CREATE FILE FORMAT my_json_format
+            TYPE = 'JSON'
+            STRIP_OUTER_ARRAY = TRUE;
+        </code>
+    </pre>
 
     <a href="../../index.html">← Back to Home</a>
     <a href="../blogs.html">← Back to Blogs</a>
