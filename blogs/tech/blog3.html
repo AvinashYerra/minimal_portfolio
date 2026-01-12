@@ -197,6 +197,98 @@
             STRIP_OUTER_ARRAY = TRUE;
         </code>
     </pre>
+    <h2>Data Loading Approaches</h2>
+    <p>We can broadly divide data loading approaches into two categories:</p>
+    <ul>
+        <li>Bulk Loading - Loading large volumes of data at once using the COPY INTO command from Stages</li>
+        <li>Continuous Loading - Using Snowpipe to automatically load data as it arrives in a Stage</li>
+    </ul>
+    <p>Bulk Loading can be done in many ways:</p>
+    <p>For loading local data:</p>
+    <ul>
+        <li>Using Table Stage - load all your local files data into a table stage and use COPY INTO command</li>
+        <li>Using User Stage - load all your local files data into a user stage and use COPY INTO command</li>
+        <li>Using Internal Stage - load all your local files data into a named internal stage and use COPY INTO command</li>
+        <li>Using External Stage - directly load data from external cloud storage into Snowflake using COPY INTO command</li>
+    </ul>
+    <p>The process of loading data from local storage involves:</p>
+    <ul>
+        <li>Named Internal Stage</li>
+        <pre>
+            <code>
+                CREATE STAGE my_internal_stage
+                FILE_FORMAT = my_csv_format;
+            </code>
+        </pre>
+        <li>Put data into Stage</li>
+        <pre>
+            <code>
+                PUT file:///path/to/your/local/file.csv @my_internal_stage;
+            </code>
+        </pre>
+        <li>COPY data into table</li>
+        <pre>
+            <code>
+                COPY INTO employee_details
+                FROM @my_internal_stage
+                FILE_FORMAT = (FORMAT_NAME = my_csv_format);
+            </code>
+        </pre>
+    </ul>
+    <p>For loading from cloud storage:</p>  
+    <ul>
+        <li>Using External Named Stage - directly load data from external cloud storage into Snowflake using COPY INTO command</li>
+        <ul>
+            <li>Create an External named stage</li>
+            <pre>
+                <code>
+                    CREATE STAGE my_external_stage
+                    URL='s3://my-bucket/data/'
+                    CREDENTIALS=(AWS_KEY_ID='your_aws_key_id' AWS_SECRET_KEY='your_aws_secret_key')
+                    FILE_FORMAT = my_csv_format;   
+                </code>
+            </pre>
+            <li>COPY data into table</li>
+            <pre>
+                <code>
+                    COPY INTO employee_details
+                    FROM @my_external_stage
+                    FILE_FORMAT = (FORMAT_NAME = my_csv_format);
+                </code>
+            </pre>
+        </ul>
+        
+    </ul>
+    <p>Continuous Loading is categorized in two ways based on frequency</p>
+    <ul>
+        <li>Batch - Use copy command - mostly used when data is coming in batches from traditional sources</li>
+        <li>Real-time - Use Snowpipe - mostly used when data is coming in real-time from modern streaming sources like Kafka</li> 
+    </ul>
+    <h3>Snowpipe</h3>
+    <p>Snowpipe is nothing but a name object containing a COPY command</p>
+    <p>Creating a snowpipe automatically creates a Snowflake pipe</p>
+    <p>We can also use the Snowpipe in two ways</p>
+    <ul>
+        <li>Using REST API - When an application uses REST API, they can use snowpipes REST API to load the data into a snowflake table</li>
+            <pre>
+                <code>
+                    CREATE OR REPLACE PIPE my_snowpipe AS
+                    COPY INTO employee_details
+                    FROM @my_external_stage
+                    FILE_FORMAT = (FORMAT_NAME = my_csv_format);
+                </code>
+            </pre>
+        <li>Auto Ingest - Basically used in Kafka, Firehose, and other streaming sources where we recieve a notification upon uploading a file and this automatically triggers the Snowpipe</li>
+            <pre>
+                <code>
+                    CREATE OR REPLACE PIPE my_snowpipe_auto_ingest AS
+                    COPY INTO employee_details
+                    FROM @my_external_stage
+                    FILE_FORMAT = (FORMAT_NAME = my_csv_format)
+                    AUTO_INGEST = TRUE;
+                </code>
+            </pre>
+    </ul>
 
     <a href="../../index.html">← Back to Home</a>
     <a href="../blogs.html">← Back to Blogs</a>
