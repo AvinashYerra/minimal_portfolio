@@ -289,6 +289,44 @@
                 </code>
             </pre>
     </ul>
+    <h2>Streams</h2>
+    <p>Streams are change data capture (CDC) objects that track DML changes (inserts, updates, deletes) made to a table over time</p>
+    <p>Streams allow you to query the changes made to a table since the last time the stream was accessed</p>
+    <p>Streams can be created on the following objects:</p>
+    <ul>
+        <li>Standard Tables</li>
+        <li>Directory Tables</li>
+        <li>External Tables</li>
+        <li>Views</li>
+    </ul>
+    <p>Streams cannot be created on Materialized Views and Secure objects like Secure Views</p>
+    <p>Streams adds 3 columns namely METADATA$ACTION, METADATA$ISUPDATE, METADATA$ROW_ID to track the changes</p>
+    <ul>
+        <li>METADATA$ACTION : Indicates the DML operation recorded (INSERT, DELETE, UPDATE)</li>
+        <li>METADATA$ISUPDATE : Indicates whether the row was updated (TRUE or FALSE)</li>
+        <li>METADATA$ROW_ID : Unique identifier for the row in the stream</li>
+    </ul>
+    <p>Streams are categorized into 3 types:</p>
+    <ul>
+        <li>Standard Streams - all types of DML changes are tracked</li>
+        <li>Append-Only Streams - only INSERT operations are tracked</li>
+        <li>Insert-Only Streams - only INSERT operations are tracked, and also on External tables</li>
+    </ul>
+    <p>syntax for creating streams:</p>
+    <pre>
+        <code>
+            -- Creating a Standard Stream
+            CREATE OR REPLACE STREAM my_standard_stream ON TABLE employee_details;
+
+            -- Creating an Append-Only Stream
+            CREATE OR REPLACE STREAM my_append_only_stream ON TABLE employee_details
+            APPEND_ONLY = TRUE;
+
+            -- Creating an Insert-Only Stream
+            CREATE OR REPLACE STREAM my_insert_only_stream ON EXTERNAL TABLE employee_details
+            INSERT_ONLY = TRUE;
+        </code>
+    </pre>
 
     <a href="../../index.html">← Back to Home</a>
     <a href="../blogs.html">← Back to Blogs</a>
