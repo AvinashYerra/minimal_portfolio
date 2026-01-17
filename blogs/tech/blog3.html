@@ -10,6 +10,7 @@
 </head>
 
 <body>
+    <!-- <p>coming soon !</p> -->
     <h1>Snowflake 101</h1>
     <p>Date: 2025-12-02</p>
 
@@ -22,7 +23,6 @@
         <li>Pay as you go model</li>
         <li>Supports all 3 major cloud providers</li>
     </ul>
-
     <h2>Editions</h2>
     <p>Snowflake comes in different editions, with varying features and pricing. Choose the one based on your use case</p>
     <ul>
@@ -31,6 +31,7 @@
         <li>Business Critical - Same as Enterprise but with additional features for high availability and compliance.</li>
         <li>Virtual Private Snowflake(VPS) - Offers complete environment isolation and dedicated infrastructure for organizations with strict regulatory or security requirements.</li>
     </ul>
+
     <h2>Architecture</h2>
     <p>Snowflake consists of 3 layers:</p>
     <ul>
@@ -56,7 +57,6 @@
     </ul>
     <p>The original role who created the particular object can grant access to other roles to access/edit the object</p>
 
-
     <h2>Databases & Schemas</h2>
     <p>To access any object in Snowflake you need to know two details. One is Database name and the other is Schema name</p>
     <p>There can be multiple schemas present in one Database</p>
@@ -68,6 +68,7 @@
     </pre>
     <p>There will be a table named INFORMATION SCHEMA, which consists of all the tables and schema list of that particular database.</p>
 
+    
     <h2>Tables</h2>
     <p>Snowflake supports 4 types of tables:</p>
     <ul>
@@ -197,7 +198,6 @@
             STRIP_OUTER_ARRAY = TRUE;
         </code>
     </pre>
-
     <h2>Data Loading Approaches</h2>
     <p>We can broadly divide data loading approaches into two categories:</p>
     <ul>
@@ -290,7 +290,6 @@
                 </code>
             </pre>
     </ul>
-
     <h2>Streams</h2>
     <p>Streams are change data capture (CDC) objects that track DML changes (inserts, updates, deletes) made to a table over time</p>
     <p>Streams allow you to query the changes made to a table since the last time the stream was accessed</p>
@@ -323,6 +322,12 @@
             -- Creating an Append-Only Stream
             CREATE OR REPLACE STREAM my_append_only_stream ON TABLE employee_details
             APPEND_ONLY = TRUE;
+
+            -- Creating an Insert-Only Stream
+            CREATE OR REPLACE STREAM my_insert_only_stream ON EXTERNAL TABLE employee_details
+            INSERT_ONLY = TRUE;
+        </code>
+    </pre>
 
             -- Creating an Insert-Only Stream
             CREATE OR REPLACE STREAM my_insert_only_stream ON EXTERNAL TABLE employee_details
