@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snowflake 101</title>
+    <link rel="stylesheet" href="../../style.css">
+    <script defer src="https://umami-portfolio.onrender.com/script.js" data-website-id="46373895-3859-4565-a6a9-f80be3afa929"></script>
+</head>
+
+<body>
+    <!-- <p>coming soon !</p> -->
+    <h1>Snowflake 101</h1>
+    <p>Date: 2025-12-02</p>
+
+    <h2>Intro to Snowflake</h2>
+    <p>Snowflake is a cloud based Data Warehouse that is able to store large amounts of data useful for analytics, reporting and sometimes Machine Learning</p>
+    <img src="../../assets/images/dw.png" alt="Snowflake Image">
+    <p>Pros</p>
+    <ul>
+        <li>Easy to manage and scale</li>
+        <li>Pay as you go model</li>
+        <li>Supports all 3 major cloud providers</li>
+    </ul>
+    <h2>Editions</h2>
+    <p>Snowflake comes in different editions, with varying features and pricing. Choose the one based on your use case</p>
+    <ul>
+        <li>Standard - Designed for general-purpose analytics and data warehousing with core Snowflake features at the lowest cost.</li>
+        <li>Enterprise - Adds advanced security, governance, and scalability features for large-scale production workloads.</li>
+        <li>Business Critical - Same as Enterprise but with additional features for high availability and compliance.</li>
+        <li>Virtual Private Snowflake(VPS) - Offers complete environment isolation and dedicated infrastructure for organizations with strict regulatory or security requirements.</li>
+    </ul>
+
+    <h2>Architecture</h2>
+    <p>Snowflake consists of 3 layers:</p>
+    <ul>
+        <li>Cloud Services Layer - Manages security, metadata, and infrastructure management</li>
+        <li>Compute Layer - Handles query processing and execution, these are called warehouses which is a cluster of servers. Large the warehouse size, more the compute power, faster the query execution</li> 
+        <li>Storage Layer - Manages data storage and retrieval, uses micro-partitions that are immutable for storing data in columnar format</li>   
+    </ul>
+    <p>Snowflake charges as per the compute power used and the amount of data stored</p>
+    <img src="../../assets/images/sf-arch.png" alt="Snowflake Image">
+    <h2>UI - description</h2>
+    <ul>
+        <p>placeholder for image</p>
+    </ul>
+
+    <h2>Roles</h2>
+    <p>Snowflake allows you to create different roles where you can manage access to different Databases, Schemas, Tables, Views</p>
+    <p>There are 4 common roles available in Snowflake</p>
+    <ul>
+        <li>ACCOUNTADMIN - Full control (use carefully!)</li>
+        <li>SYSADMIN - Create databases and warehouses</li>
+        <li>SECURITYADMIN - Manage users and roles</li>
+        <li>PUBLIC - Default role for all users</li>
+    </ul>
+    <p>The original role who created the particular object can grant access to other roles to access/edit the object</p>
+
+    <h2>Databases & Schemas</h2>
+    <p>To access any object in Snowflake you need to know two details. One is Database name and the other is Schema name</p>
+    <p>There can be multiple schemas present in one Database</p>
+    <p>For example, consider a table name 'employee_details' present in database - 'employee_db' and schema - 'employee-schema'. you can select the table using the query -</p>
+    <pre>
+        <code>
+            SELECT * FROM employee_db.employee_schema.employee_details;
+        </code>
+    </pre>
+    <p>There will be a table named INFORMATION SCHEMA, which consists of all the tables and schema list of that particular database.</p>
+
+    
+    <h2>Tables</h2>
+    <p>Snowflake supports 4 types of tables:</p>
+    <ul>
+        <li>Permanent Tables - Default table type, data is stored until deleted</li>
+        <li>Temporary Tables - Data is stored only for the session duration</li>
+        <li>Transient Tables - Data is stored until deleted, but no fail-safe available</li>
+        <li>External Tables - Data is stored outside Snowflake - Read only(like S3, Azure Blob etc.)</li>
+    </ul>
+    <p>syntax for creating different types of tables:</p>
+    <pre>
+        <code>
+            -- Creating a Permanent Table
+            CREATE TABLE employee_details (
+                id INT,
+                name STRING,
+                department STRING
+            );
+
+            -- Creating a Temporary Table
+            CREATE TEMPORARY TABLE temp_employee_details (
+                id INT,
+                name STRING,
+                department STRING
+            );
+
+            -- Creating a Transient Table
+            CREATE TRANSIENT TABLE transient_employee_details (
+                id INT,
+                name STRING,
+                department STRING
+            );
+
+            -- Creating an External Table
+            CREATE EXTERNAL TABLE external_employee_details (
+                id INT,
+                name STRING,
+                department STRING
+            )
+            LOCATION='s3://your-bucket/employee_data/'
+            FILE_FORMAT = (TYPE = 'CSV' FIELD_DELIMITER = ',' SKIP_HEADER = 1);
+        </code>
+    </pre>
+    <p>Time travel will be available for Permanent (90 days) and Transient (1 day), Temporary (1 day) tables, but not for External tables.</p>
+
+    <h2>Views</h2>  
+    <p>Views are virtual tables that are based on the result set of a SQL query</p>
+    <p>Views do not store data themselves, but they are executed and displayed when accessed</p>
+    <p>Snowflake supports 3 types of views</p>
+    <ul>
+        <li>Standard Views - Basic views created using SELECT statements</li>
+        <li>Materialized Views - Precomputed views that store the result set for faster access, acts more like a table</li>
+        <li>Secure Views - Encrypted views that provide an additional layer of security</li>
+    </ul>
+    <p>syntax for creating different types of views:</p>
+    <pre>
+        <code>
+            -- Creating a Standard View
+            CREATE VIEW employee_view AS
+            SELECT id, name, department
+            FROM employee_details
+            WHERE department = 'Sales';
+
+            -- Creating a Materialized View
+            CREATE MATERIALIZED VIEW sales_employee_view AS
+            SELECT id, name, department
+            FROM employee_details
+            WHERE department = 'Sales';
+
+            -- Creating a Secure View
+            CREATE SECURE VIEW secure_employee_view AS
+            SELECT id, name, department
+            FROM employee_details
+            WHERE department = 'HR';
+        </code>
+    </pre>
+
+    <h2>Stages</h2>
+    <p>Stages are used to named storage locations where you can store files in Snowflake</p>
+    <p>They can be used to stage data for loading into tables or to store data that is not part of the database schema</p>
+    <p>Snowflake supports 3 types of stages:</p>
+    <ul>
+        <li>Table Stages - Used to store data that are linked to specific table (Internal & Created automatically)</li>
+        <li>User Stages - Used to store data that are linked to a specific user (Internal & Created automatically)</li>
+        <li>Named Stages - Named storage locations for storing files (External & Created by user)</li>
+        <p>Named Stages are again categorized into 2 types</p>
+        <ul>
+            <li>External Stages - Stages that point to external cloud storage locations like AWS S3, Azure Blob Storage, Google Cloud Storage</li>
+            <li>Internal Stages - Stages that are managed by Snowflake and stored within the Snowflake environment</li>
+        </ul>
+    </ul>
+        <p>syntax for creating stages:</p>
+        <pre>
+            <code>
+                --Accessing Table Stage
+                list @%employee_details; -- table name is employee_details
+
+                --Accessing User Stage
+                list @~;
+
+                -- Creating an Internal Named Stage
+                CREATE STAGE my_internal_stage;
+
+                -- Creating an External Named Stage (AWS S3 example)
+                CREATE STAGE my_external_stage
+                URL='s3://my-bucket/data/'
+                CREDENTIALS=(AWS_KEY_ID='your_aws_key_id' AWS_SECRET_KEY='your_aws_secret_key');
+            </code>
+        </pre>
+
+    <h2>File Formats</h2>
+    <p>File formats define the structure of the data in files that are loaded into Snowflake</p>    
+    <p>Snowflake supports various file formats including CSV, JSON, Avro, Parquet, ORC, XML etc</p>
+    <p>You can create your own file format and use it loading files from Stages</p>
+    <p>syntax for creating file formats:</p>
+    <pre>
+        <code>
+            -- Creating a CSV File Format
+            CREATE FILE FORMAT my_csv_format
+            TYPE = 'CSV'
+            FIELD_DELIMITER = ','
+            SKIP_HEADER = 1
+            FIELD_OPTIONALLY_ENCLOSED_BY = '"';
+
+            -- Creating a JSON File Format
+            CREATE FILE FORMAT my_json_format
+            TYPE = 'JSON'
+            STRIP_OUTER_ARRAY = TRUE;
+        </code>
+    </pre>
+    <h2>Data Loading Approaches</h2>
+    <p>We can broadly divide data loading approaches into two categories:</p>
+    <ul>
+        <li>Bulk Loading - Loading large volumes of data at once using the COPY INTO command from Stages</li>
+        <li>Continuous Loading - Using Snowpipe to automatically load data as it arrives in a Stage</li>
+    </ul>
+    <p>Bulk Loading can be done in many ways:</p>
+    <p>For loading local data:</p>
+    <ul>
+        <li>Using Table Stage - load all your local files data into a table stage and use COPY INTO command</li>
+        <li>Using User Stage - load all your local files data into a user stage and use COPY INTO command</li>
+        <li>Using Internal Stage - load all your local files data into a named internal stage and use COPY INTO command</li>
+        <li>Using External Stage - directly load data from external cloud storage into Snowflake using COPY INTO command</li>
+    </ul>
+    <p>The process of loading data from local storage involves:</p>
+    <ul>
+        <li>Named Internal Stage</li>
+        <pre>
+            <code>
+                CREATE STAGE my_internal_stage
+                FILE_FORMAT = my_csv_format;
+            </code>
+        </pre>
+        <li>Put data into Stage</li>
+        <pre>
+            <code>
+                PUT file:///path/to/your/local/file.csv @my_internal_stage;
+            </code>
+        </pre>
+        <li>COPY data into table</li>
+        <pre>
+            <code>
+                COPY INTO employee_details
+                FROM @my_internal_stage
+                FILE_FORMAT = (FORMAT_NAME = my_csv_format);
+            </code>
+        </pre>
+    </ul>
+    <p>For loading from cloud storage:</p>  
+    <ul>
+        <li>Using External Named Stage - directly load data from external cloud storage into Snowflake using COPY INTO command</li>
+        <ul>
+            <li>Create an External named stage</li>
+            <pre>
+                <code>
+                    CREATE STAGE my_external_stage
+                    URL='s3://my-bucket/data/'
+                    CREDENTIALS=(AWS_KEY_ID='your_aws_key_id' AWS_SECRET_KEY='your_aws_secret_key')
+                    FILE_FORMAT = my_csv_format;   
+                </code>
+            </pre>
+            <li>COPY data into table</li>
+            <pre>
+                <code>
+                    COPY INTO employee_details
+                    FROM @my_external_stage
+                    FILE_FORMAT = (FORMAT_NAME = my_csv_format);
+                </code>
+            </pre>
+        </ul>
+        
+    </ul>
+    <p>Continuous Loading is categorized in two ways based on frequency</p>
+    <ul>
+        <li>Batch - Use copy command - mostly used when data is coming in batches from traditional sources</li>
+        <li>Real-time - Use Snowpipe - mostly used when data is coming in real-time from modern streaming sources like Kafka</li> 
+    </ul>
+    <h3>Snowpipe</h3>
+    <p>Snowpipe is nothing but a name object containing a COPY command</p>
+    <p>Creating a snowpipe automatically creates a Snowflake pipe</p>
+    <p>We can also use the Snowpipe in two ways</p>
+    <ul>
+        <li>Using REST API - When an application uses REST API, they can use snowpipes REST API to load the data into a snowflake table</li>
+            <pre>
+                <code>
+                    CREATE OR REPLACE PIPE my_snowpipe AS
+                    COPY INTO employee_details
+                    FROM @my_external_stage
+                    FILE_FORMAT = (FORMAT_NAME = my_csv_format);
+                </code>
+            </pre>
+        <li>Auto Ingest - Basically used in Kafka, Firehose, and other streaming sources where we recieve a notification upon uploading a file and this automatically triggers the Snowpipe</li>
+            <pre>
+                <code>
+                    CREATE OR REPLACE PIPE my_snowpipe_auto_ingest AS
+                    COPY INTO employee_details
+                    FROM @my_external_stage
+                    FILE_FORMAT = (FORMAT_NAME = my_csv_format)
+                    AUTO_INGEST = TRUE;
+                </code>
+            </pre>
+    </ul>
+    <h2>Streams</h2>
+    <p>Streams are change data capture (CDC) objects that track DML changes (inserts, updates, deletes) made to a table over time</p>
+    <p>Streams allow you to query the changes made to a table since the last time the stream was accessed</p>
+    <p>Streams can be created on the following objects:</p>
+    <ul>
+        <li>Standard Tables</li>
+        <li>Directory Tables</li>
+        <li>External Tables</li>
+        <li>Views</li>
+    </ul>
+    <p>Streams cannot be created on Materialized Views and Secure objects like Secure Views</p>
+    <p>Streams adds 3 columns namely METADATA$ACTION, METADATA$ISUPDATE, METADATA$ROW_ID to track the changes</p>
+    <ul>
+        <li>METADATA$ACTION : Indicates the DML operation recorded (INSERT, DELETE, UPDATE)</li>
+        <li>METADATA$ISUPDATE : Indicates whether the row was updated (TRUE or FALSE)</li>
+        <li>METADATA$ROW_ID : Unique identifier for the row in the stream</li>
+    </ul>
+    <p>Streams are categorized into 3 types:</p>
+    <ul>
+        <li>Standard Streams - all types of DML changes are tracked</li>
+        <li>Append-Only Streams - only INSERT operations are tracked</li>
+        <li>Insert-Only Streams - only INSERT operations are tracked, and also on External tables</li>
+    </ul>
+    <p>syntax for creating streams:</p>
+    <pre>
+        <code>
+            -- Creating a Standard Stream
+            CREATE OR REPLACE STREAM my_standard_stream ON TABLE employee_details;
+
+            -- Creating an Append-Only Stream
+            CREATE OR REPLACE STREAM my_append_only_stream ON TABLE employee_details
+            APPEND_ONLY = TRUE;
+
+            -- Creating an Insert-Only Stream
+            CREATE OR REPLACE STREAM my_insert_only_stream ON EXTERNAL TABLE employee_details
+            INSERT_ONLY = TRUE;
+        </code>
+    </pre>
+
+            -- Creating an Insert-Only Stream
+            CREATE OR REPLACE STREAM my_insert_only_stream ON EXTERNAL TABLE employee_details
+            INSERT_ONLY = TRUE;
+        </code>
+    </pre>
+
+    <h2>Tasks</h2>
+    <p>Tasks are scheduled jobs in Snowflake that can execute a SQL statement or a stored procedure that consists of multiple SQL statements</p>
+    <p>There are 4 parameters that are required in creating a task</p>
+    <ul>
+        <li>Schedule</li>
+        <li>Warehouse</li>
+        <li>SQL Statement(code)</li>
+        <li>Condition</li>
+    </ul>
+    <p>Tasks are divided into multiple categories:</p>
+    <ul>Based on warehouse
+    <li>User Managed Tasks - User mention the virtual warehouse that is created by them</li>
+    <li>Serverless Tasks - User mention the name of the warehouse that is required for the computation not the user managed one</li>
+    </ul>
+    <ul>Based on scheduling
+    <li>Non - Cron - Provide the schedule in minutes, hours etc . Min is 1 minute</li>
+    <li>Cron - Provide the schedule in cron format</li>
+    </ul>
+    <p>syntax for creating tasks:</p>  
+    <pre>
+        <code>
+            -- Creating a User Managed Non-Cron Task
+            CREATE OR REPLACE TASK my_user_managed_task
+            WAREHOUSE = my_warehouse -- user created warehouse name
+            SCHEDULE = '5 MINUTE'
+            AS
+            INSERT INTO employee_audit_log (id, name, department, action)
+            SELECT id, name, department, 'INSERT'
+            FROM employee_details
+            WHERE METADATA$ACTION = 'INSERT';
+
+            -- Creating a Serverless Cron Task
+            CREATE OR REPLACE TASK my_serverless_cron_task
+            WAREHOUSE = 'XS_SNOWFLAKE_COMPUTE_WH' --give the defaut XS warehouse name
+            SCHEDULE = '0 0 * * *'  -- Every day at midnight
+            AS
+            DELETE FROM employee_details
+            WHERE last_updated < DATEADD(month, -6, CURRENT_DATE());
+        </code>
+    </pre>
+    <p>You can check the status of tasks using the following command:</p>   
+    <pre>
+        <code>
+            SELECT * FROM (information_schema.TASK_HISTORY(TASK_NAME => 'my_task'));
+        </code>
+    </pre>
+
+    <h2>Time Travel & Fail Safe</h2>
+    <p>Time Travel allows you to access historical data (up to 90 days) that has been modified or deleted</p>
+    <p>We can set the retention period to a particular table while creating it using 'DATA_RETENTION_TIME_IN_DAYS'</p>
+    <p>You can query the data using the AT & BEFORE keywords:</p>
+    <pre>
+        <code>
+            -- Querying data at a specific point in time
+            SELECT * FROM employee_details AT (TIMESTAMP => '2023-10-01 12:00:00');
+
+            -- Querying data before a specific point in time
+            SELECT * FROM employee_details BEFORE (STATEMENT => 'query_id');
+        </code>
+    </pre>
+    <p>
+        you can also restore the data using 
+        <pre>
+            <code>
+                UNDROP TABLE/SCHEMA/DATABASE;
+            </code>
+        </pre>
+    </p>
+    <p>Fail Safe is a 7-day period after the Time Travel retention period during which Snowflake can recover historical data for you</p>
+    <p>This cannot be done by the User, you have to connect to Snowflake personal support</p>
+
+    <h2>Cloning</h2>
+    <p>Cloning allows you to create a copy of a database, schema, or table without duplicating the actual data</p>
+    <p>Clones are created instantaneously and share the same metadata as the original object, that means they refer to the same micro partitions until a change is made on clone</p>
+    <p>syntax for creating clones:</p>
+    <pre>
+        <code>
+            -- Creating a Database Clone
+            CREATE DATABASE employee_db_clone CLONE employee_db;
+
+            -- Creating a Schema Clone
+            CREATE SCHEMA employee_schema_clone CLONE employee_db.employee_schema;
+
+            -- Creating a Table Clone
+            CREATE TABLE employee_details_clone CLONE employee_db.employee_schema.employee_details;
+        </code>
+    </pre>
+
+
+    <h2>Commonly asked question - Why snowflake, not traditional warehouse</h2>
+    <p>
+        <ul>
+            <li>Separates compute and storage - flexible enough to choose the computation power. Auto scaleup when mutliple teams are working at the same time</li>
+            <li>Reduce operational overhead. Handles Scaling, Optimization - team can focus on engineering and analytics</li>
+            <li>Easy to integrate any type of file formats like JSON, Parquet, AVRO from any cloud using Stages and COPY INTO</li>
+            <li>Integrates well with Airflow, Python and any Cloud service</li>
+            <li>Features like time-travel, zero copy clone are cherry on top</li>
+        </ul>
+    </p>
+
+
+
+    <p>This is a short summarization of the video - <a href="https://www.youtube.com/watch?v=mP3QbYURT9k">Snowflake for Beginners by Data Engineering Academy</a></p>
+    <a href="../../index.html">← Back to Home</a>
+    <a href="../blogs.html">← Back to Blogs</a>
+
+    <script>
+    if (localStorage.getItem("theme") === "dark") {
+            document.body.classList.add("dark");
+    }
+    </script>
+</body>
+
+</html>

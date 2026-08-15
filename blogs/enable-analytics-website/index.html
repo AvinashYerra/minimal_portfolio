@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enabling Analytics for your website</title>
+    <link rel="stylesheet" href="../../style.css">
+    <script defer src="https://umami-portfolio.onrender.com/script.js" data-website-id="46373895-3859-4565-a6a9-f80be3afa929"></script>
+</head>
+
+<body>
+    <h1>Enabling Analytics for your website</h1>
+    <p>Date: 2025-12-07</p>
+    <p>Whenever you host a website, along with the functionality the analysis that can be done with the visitors is also important</p>
+    <p>There are many analytics tools available, both paid and free. Google Analytics is one of the most popular ones, but it has some privacy concerns.</p>
+    <p>Umami is a free and <strong>open source</strong>web analytics tool that is privacy-focused. It is easy to set up and use.</p>
+    <h2>Steps to enable Umami Analytics for your website</h2>
+    <p>To setup Umami analytics, follow the below steps</p>
+    <ul>
+        <li>Setup a postgres instance - I used <strong>neondb</strong> as this offers a free tier instance and easy to connect</li>
+        <li>Create a repository in your Github and add a file named 'Dockerfile' which has the docker file that is used to initialize Umami</li>
+        <li>Paste the below code in the 'Dockerfile'</li>
+        <code>FROM ghcr.io/umami-software/umami:latest</code>
+        <li>Now host this website using Render (free tier) and add three environment variables for Database connection</li>
+        <ul>
+            <li>DATABASE_URL - The connection string for your postgres database</li>
+            <li>APP_SECRET - A random string with size - 32 used for encryption</li>
+            <li>PORT - Set this to 3000</li>
+        </ul>
+        <li>Once the build is done and your website is hosted use the default credentials of Umami</li>
+        <ul>
+            <li>Username : admin</li>
+            <li>Password : umami</li>
+        </ul>
+        <li>Change the password after first login</li>
+        <li>Add a new website in Umami dashboard and click on edit website option</li>
+        <li>Navigate to the script in the edit option</li>
+        <li>Paste this script tag in all the html files of your website in the head</li>
+        <li>Now you can see the analytics data in your Umami dashboard</li> 
+    </ul>
+    <p>That's it! You have successfully enabled Umami analytics for your website.</p>
+    <p>For more details, visit the <a href="https://umami.is/">official Umami website</a></p>
+
+    <a href="../../index.html">← Back to Home</a>
+    <a href="../blogs.html">← Back to Blogs</a>
+
+    <script>
+    if (localStorage.getItem("theme") === "dark") {
+            document.body.classList.add("dark");
+    }
+    </script>
+</body>
+
+</html>
