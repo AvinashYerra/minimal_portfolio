@@ -2,10 +2,44 @@
   "about": {
     "name": "Avinash Yerra",
     "role": "Data Engineer, Polymath ",
-    "email": "avinashyerra123@gmail.com"
+    "email": "avinashyerra123@gmail.com",
+    "summary": [
+      "Data Engineer building scalable, reliable pipelines and warehouses that turn raw data into trusted, analytics-ready datasets.",
+      "Hands-on across PySpark, Airflow, Snowflake, Databricks, AWS/Azure, Terraform and the modern data stack.",
+      "Core strengths: ETL/ELT, data modeling, data quality, performance tuning, pipeline orchestration, distributed processing, and CI/CD in Agile teams."
+    ]
   },
-  "skills": ["Python","SQL","C","C++","Bash","JavaScript","PySpark (Spark)","Airflow","VS Code","Excel","MySQL","PostgreSQL","Snowflake","Git","Hadoop"],
-
+  "skills": [
+    { "name": "Python", "icon": "https://cdn.simpleicons.org/python" },
+    { "name": "MySQL", "icon": "https://cdn.simpleicons.org/mysql" },
+    { "name": "Bash", "icon": "https://cdn.simpleicons.org/gnubash" },
+    { "name": "C", "icon": "https://cdn.simpleicons.org/c" },
+    { "name": "C++", "icon": "https://cdn.simpleicons.org/cplusplus" },
+    { "name": "JavaScript", "icon": "https://cdn.simpleicons.org/javascript" },
+    { "name": "PySpark", "icon": "https://cdn.simpleicons.org/apachespark" },
+    { "name": "Spark SQL", "icon": "https://cdn.simpleicons.org/apachespark" },
+    { "name": "Apache Airflow", "icon": "https://cdn.simpleicons.org/apacheairflow" },
+    { "name": "Databricks", "icon": "https://cdn.simpleicons.org/databricks" },
+    { "name": "Snowflake", "icon": "https://cdn.simpleicons.org/snowflake" },
+    { "name": "Snowpark", "icon": "https://cdn.simpleicons.org/snowflake" },
+    { "name": "DuckDB", "icon": "https://cdn.simpleicons.org/duckdb" },
+    { "name": "Pandas", "icon": "https://cdn.simpleicons.org/pandas" },
+    { "name": "NumPy", "icon": "https://cdn.simpleicons.org/numpy" },
+    { "name": "Hadoop", "icon": "https://cdn.simpleicons.org/apachehadoop" },
+    { "name": "Parquet", "icon": "https://cdn.simpleicons.org/apacheparquet" },
+    { "name": "PostgreSQL", "icon": "https://cdn.simpleicons.org/postgresql" },
+    { "name": "AWS", "icon": "assets/images/aws.svg" },
+    { "name": "Azure", "icon": "assets/images/azure.svg" },
+    { "name": "Terraform", "icon": "https://cdn.simpleicons.org/terraform" },
+    { "name": "Tableau", "icon": "assets/images/tableau.svg" },
+    { "name": "Streamlit", "icon": "https://cdn.simpleicons.org/streamlit" },
+    { "name": "Plotly", "icon": "https://cdn.simpleicons.org/plotly" },
+    { "name": "Docker", "icon": "https://cdn.simpleicons.org/docker" },
+    { "name": "Docker Compose", "icon": "https://cdn.simpleicons.org/docker" },
+    { "name": "Git", "icon": "https://cdn.simpleicons.org/git" },
+    { "name": "Bitbucket", "icon": "https://cdn.simpleicons.org/bitbucket" },
+    { "name": "Excel", "icon": "assets/images/excel.svg" }
+  ],
   "education": [
     { "degree": "B.Tech in CSE", "institute": "NIT Raipur", "year": "2024" },
     { "degree": "MPC", "institute": "Tirumala College", "year": "2020" }
@@ -16,9 +50,8 @@
     { "role": "Business Technology Solution Associate Intern", "company": "ZS Associates", "duration": "Jan 2024 - Jun 2024" },
     { "role": "Project Intern", "company": "CompleteCure Solutions", "duration": "Jun 2023 - Aug 2023 " }
   ],
- 
   "socials": {
-    "Email" : "mailto:avinashyerra123@gmail.com",
+    "Email": "mailto:avinashyerra123@gmail.com",
     "GitHub": "https://github.com/AvinashYerra",
     "LinkedIn": "https://www.linkedin.com/in/avinash-yerra/",
     "X": "https://x.com/avii_twts",
@@ -26,6 +59,5 @@
     "GeeksForGeeks": "https://www.geeksforgeeks.org/user/avinashyerra123/",
     "CodeChef": "https://www.codechef.com/users/avinashyerra",
     "Codeforces": "https://codeforces.com/profile/avinashyerra"
-    
   }
 }

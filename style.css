@@ -1,5 +1,19 @@
+@import url('https://api.fontshare.com/v2/css?f[]=zina@400&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=recia@400,500,600&display=swap');
+
 * {
     transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 84px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
 }
 :root {
     --bg: whitesmoke;
@@ -7,31 +21,142 @@
     --nav-text: black;
     --nav-link: black;
     --border: #ddd;
+    --card-bg: #ffffff;
+    --stripe: #000000;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 4px 14px rgba(0, 0, 0, 0.06);
 }
 
 .dark {
-    --bg: #0d1117;
-    --text: #e6edf3;
-    --nav-text: #e6edf3;
-    --nav-link: #e6edf3;
-    --border: #30363d;
+    --bg: #000000;
+    --text: #f5f5f5;
+    --nav-text: #f5f5f5;
+    --nav-link: #f5f5f5;
+    --border: #333333;
+    --card-bg: #000000;
+    --stripe: #ffffff;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 4px 18px rgba(255, 255, 255, 0.05);
 }
 
 body {
-    font-family: 'Fira Code', monospace;
+    font-family: 'Recia', Georgia, 'Times New Roman', serif;
     max-width: 690px;
     margin: auto;
     padding: 20px;
     background-color: var(--bg);
     color: var(--text);
+    line-height: 1.75;
+    font-size: 17px;
+    font-weight: 400;
+    position: relative;
 }
 
 header, section {
-    margin-bottom: 10px;
+    background-color: var(--card-bg);
+    border: 1px dashed var(--stripe);
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
 }
 
-h1, h2 {
+.profile-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 8px;
+}
+
+.profile-pic {
+    width: 104px;
+    height: 104px;
+    border-radius: 12px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid var(--border);
+    box-shadow: var(--shadow);
+}
+
+.profile-id h1 {
+    margin: 0;
+    font-size: 1.9rem;
+}
+
+.profile-id p {
+    margin: 4px 0 0;
+    opacity: 0.85;
+}
+
+@media (max-width: 480px) {
+    .profile-pic {
+        width: 84px;
+        height: 84px;
+    }
+
+    .profile-row {
+        gap: 14px;
+    }
+}
+
+header h1, section h2 {
+    margin-top: 0;
+}
+
+.summary-list {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin: 10px 0 14px;
+    padding-left: 22px;
+    opacity: 0.92;
+    text-align: left;
+    list-style: disc;
+}
+
+.summary-list li {
+    margin-bottom: 6px;
+}
+
+.summary-list li:last-child {
+    margin-bottom: 0;
+}
+
+@media (min-width: 600px) {
+    .summary-list {
+        text-align: justify;
+        text-justify: inter-word;
+    }
+}
+
+section ul {
+    margin-bottom: 0;
+}
+
+h1, h2, h3 {
+    font-family: 'Zina', 'Recia', Georgia, serif;
     color: var(--text);
+    line-height: 1.25;
+    letter-spacing: 0;
+    font-weight: 400;
+}
+
+h1 {
+    font-weight: 400;
+}
+
+h2 {
+    font-weight: 400;
+}
+
+h3 {
+    font-weight: 400;
+}
+
+.exp-main, .edu-main, strong, b {
+    font-weight: 500;
+}
+
+nav a, .blog-button {
+    font-family: 'Recia', Georgia, serif;
+    font-weight: 400;
 }
 
 nav {
@@ -39,14 +164,25 @@ nav {
     justify-content: center;
     gap: 20px;
     color: var(--nav-text);
-    background-color: transparent;
+    background-color: var(--bg);
     padding: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+@supports (background-color: color-mix(in srgb, red 50%, transparent)) {
+    nav {
+        background-color: color-mix(in srgb, var(--bg) 82%, transparent);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
 }
 
 nav a {
     color: var(--nav-link);
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 400;
     padding: 8px 16px;
     border-radius: 6px;
     transition: background-color 0.3s ease;
@@ -85,7 +221,7 @@ a:hover {
 }
 
 
-#skills-list , #socials-list{
+#socials-list {
     display: flex;
     color: var(--text);
     flex-wrap: wrap;
@@ -94,10 +230,44 @@ a:hover {
     list-style: none;
 }
 
-#skills-list li, #socials-list li {
+#socials-list li {
     padding: 8px 12px;
     font-size: 14px;
+    font-weight: 400;
     white-space: nowrap;
+}
+
+/* Flat skills — borderless items with logos (no inner boxes) */
+#skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    color: var(--text);
+}
+
+#skills-list li {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 0;
+    font-size: 14px;
+    font-weight: 400;
+    white-space: nowrap;
+    line-height: 1.5;
+}
+
+#skills-list img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.dark #skills-list img {
+    filter: brightness(1.2);
 }
 
 .blog-button {
@@ -106,13 +276,16 @@ a:hover {
     color: var(--text);
     border-radius: 6px;
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 500;
 }
 
 #experience-list,#education-list {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    list-style: none;
+    padding-left: 0;
+    margin-top: 0;
 }
 
 .experience-item,.education-item {
@@ -120,10 +293,15 @@ a:hover {
     border-bottom: 1px solid var(--border);
 }
 
+.experience-item:last-child,.education-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
 .exp-main, .edu-main {
     display: flex;
     justify-content: space-between; 
-    font-weight: bold;
+    font-weight: 500;
 }
 
 .exp-company, .edu-institute{

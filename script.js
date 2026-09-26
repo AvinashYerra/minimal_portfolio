@@ -64,11 +64,32 @@ fetch('data.json')
         emailEl.href = `mailto:${data.about.email}`;
         emailEl.innerText = data.about.email;
 
-        data.skills.forEach(skill => {
-            const li = document.createElement('li');
-            li.textContent = skill;
-            document.getElementById('skills-list').appendChild(li);
-        });
+        const summaryListEl = document.getElementById('summary-list');
+        if (summaryListEl && data.about.summary) {
+            const points = Array.isArray(data.about.summary)
+                ? data.about.summary
+                : [data.about.summary];
+            points.forEach(point => {
+                const li = document.createElement('li');
+                li.innerText = point;
+                summaryListEl.appendChild(li);
+            });
+        }
+
+        const skillsListEl = document.getElementById('skills-list');
+        if (skillsListEl && data.skills) {
+            data.skills.forEach(skill => {
+                const name = typeof skill === 'string' ? skill : skill.name;
+                const icon = typeof skill === 'string' ? null : skill.icon;
+                const li = document.createElement('li');
+                if (icon) {
+                    li.innerHTML = `<img src="${icon}" alt="${name} logo" loading="lazy" onerror="this.remove()"><span>${name}</span>`;
+                } else {
+                    li.textContent = name;
+                }
+                skillsListEl.appendChild(li);
+            });
+        }
 
         data.education.forEach(edu => {
             const div = document.createElement('div');
