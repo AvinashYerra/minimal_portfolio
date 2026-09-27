@@ -6,20 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Avinash Yerra</title>
     <link rel="stylesheet" href="style.css"/>
-    <link href="https://api.fontshare.com/v2/css?f[]=zina@400&display=swap" rel="stylesheet">
-    <link href="https://api.fontshare.com/v2/css?f[]=recia@400,500,600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script defer src="https://umami-portfolio.onrender.com/script.js" data-website-id="46373895-3859-4565-a6a9-f80be3afa929"></script>
 </head>
 
 <body>
     <nav>
-        <a href="#skills">Skills</a>
-        <a href="#education">Education</a>
-        <a href="#experience">Experience</a>
-        <!-- <a href="#projects">Projects</a> -->
-        <a href="blog/blogs.html">Blogs</a>
-        <a href="#socials">Contact</a>
-        <button id="theme-toggle" class="theme-btn">🌙</button>
+        <a href="#" class="site-name">Avinash Yerra</a>
+        <div class="nav-links">
+            <a href="#skills">Skills</a>
+            <a href="#education">Education</a>
+            <a href="#experience">Experience</a>
+            <!-- <a href="#projects">Projects</a> -->
+            <a href="blog/blogs.html">Blogs</a>
+            <a href="#socials">Contact</a>
+            <button id="theme-toggle" class="theme-btn">🌙</button>
+        </div>
     </nav>
 
 
@@ -32,7 +36,7 @@
             </div>
         </div>
         <ul id="summary-list" class="summary-list"></ul>
-        <p>Reach out to me at: <a id="email" href=""></a></p>
+        <p class="contact-line">Reach out to me at: <a id="email" href=""></a></p>
         <!-- <button onclick="copyText()">Copy</button> -->
         
     </header>
@@ -68,6 +72,11 @@
         <h2>Connect with me</h2>
         <ul id="socials-list"></ul>
     </section>
+
+    <footer>
+        <p>© 2026 Avinash Yerra</p>
+        <p>Data Engineer</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>
