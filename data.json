@@ -35,7 +35,6 @@
     { "name": "Streamlit", "icon": "https://cdn.simpleicons.org/streamlit" },
     { "name": "Plotly", "icon": "https://cdn.simpleicons.org/plotly" },
     { "name": "Docker", "icon": "https://cdn.simpleicons.org/docker" },
-    { "name": "Docker Compose", "icon": "https://cdn.simpleicons.org/docker" },
     { "name": "Git", "icon": "https://cdn.simpleicons.org/git" },
     { "name": "Bitbucket", "icon": "https://cdn.simpleicons.org/bitbucket" },
     { "name": "Excel", "icon": "assets/images/excel.svg" }
